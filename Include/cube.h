@@ -10,40 +10,46 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef  CUBE_H
-# define  CUBE_H
-# define TWO_PI			6.28318530
-# define PI				3.14159265359
-# define HEIGHT			900
-# define WIDTH			1400
+#ifndef CUBE_H
+#define CUBE_H
+#define TWO_PI 6.28318530
+#define PI 3.14159265359
+#define HEIGHT 900
+#define WIDTH 1400
 
-# include "stdio.h"
-# include "stdlib.h"
-# include "../utils/get_next_line.h"
-# include "../utils/libft/libft.h"
-# include "stdbool.h"
-# include "math.h"
+#include "../utils/get_next_line.h"
+#include "../utils/libft/libft.h"
+#include "math.h"
+#include "stdbool.h"
+#include "stdio.h"
+#include "stdlib.h"
 #include <dirent.h>
-typedef struct t_tree
-{
 
-	struct t_tree	*node;
-	 
-	void			*content;
-	struct t_tree	*left ;
-	struct t_tree	*right;
-}					t_tree;
+typedef struct t_dlist {
+  void *content;
+  struct t_dlist *next;
+  struct t_dlist *prev;
+} t_dlist;
 
+typedef struct s_flag {
+  char **args;
+  int R_flag;
+  int r_flag;
+  int l_flag;
+  int a_flag;
+  int t_flag;
+} t_flag;
 
+t_flag *get_flaggy(char *str);
+t_dlist *ft_lst_lastnode(t_dlist *currlist);
+t_dlist *ft_lst_firstnode(t_dlist *currlist);
+t_dlist *ft_lst_prevnode(t_dlist *currlist);
+t_dlist *ft_lst_nextnode(t_dlist *currlist);
+t_dlist *node_init(void *content);
+void ft_lst_add_frontd(t_dlist **currlist, t_dlist *newnode);
+void ft_lst_add_backd(t_dlist **currlist, t_dlist *node);
 
+void ft_cleart_dlist(t_dlist **currlist, void (*del)(void *));
+t_dlist *node_init(void *content);
 
-
-
-
-t_tree		*ft_lst_lastnode(t_tree *currlist);
-t_tree		*ft_lst_firstnode(t_tree *currlist);
-t_tree		*ft_lst_prevnode(t_tree *currlist);
-t_tree		*ft_lst_nextnode(t_tree *currlist);
-t_tree		*node_init(void *content);
-
-#endif 
+#endif

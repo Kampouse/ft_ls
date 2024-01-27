@@ -4,7 +4,7 @@ NAME_B = cub3d_bonus
 
 FLAGS = -Wall -Werror -Wextra -O3 -fsanitize=address -fsanitize=undefined  
 
-SRCS = 	src/main.c					\
+SRCS = 	src/main.c src/init.c utils/dblink/dblink.c  utils/dblink/dblink_utils.c  \
 
 
 HEADER = ./Include/cube.h
@@ -54,7 +54,7 @@ val:
 	valgrind --track-origins=yes --leak-check=full ./$(NAME) ./map/valid_map1.cub
 
 run: all
-	./${NAME} 
+	./${NAME}  -R
 
 norm:
 	norminette ${SRCS}
