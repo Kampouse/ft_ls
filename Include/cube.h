@@ -41,6 +41,8 @@ typedef struct s_flag {
 } t_flag;
 
 t_flag *get_flaggy(char *str);
+void ft_lst_print(t_dlist *currlist);
+t_dlist *ft_mergeSort(t_dlist *head);
 t_dlist *ft_lst_lastnode(t_dlist *currlist);
 t_dlist *ft_lst_firstnode(t_dlist *currlist);
 t_dlist *ft_lst_prevnode(t_dlist *currlist);

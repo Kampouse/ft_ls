@@ -9,6 +9,7 @@ void print_current_directory(char *rooted, t_flag *flaggy) {
   root = opendir(rooted);
   (void)flaggy;
   t_dlist *lst = NULL;
+  t_dlist *temp_lst = NULL;
   if (root) {
     struct dirent *entry = readdir(root);
     if (entry == NULL) {
@@ -29,15 +30,28 @@ void print_current_directory(char *rooted, t_flag *flaggy) {
           char *temp = ft_strjoin(rooted, "/");
           path = ft_strjoin(temp, entry->d_name);
           free(temp);
-          printf("%s/\t", entry->d_name);
+          ft_lst_add_backd(&temp_lst, node_init(ft_strdup(entry->d_name)));
           ft_lst_add_backd(&lst, node_init(path));
           // print_current_directory(path, flaggy);
         }
       } else {
-        printf("%s\t\t", entry->d_name);
+
+        if (entry->d_name[0] == '.' && flaggy->a_flag == 1) {
+
+          ft_lst_add_backd(&temp_lst, node_init(ft_strdup(entry->d_name)));
+        } else if (entry->d_name[0] != '.') {
+
+          ft_lst_add_backd(&temp_lst, node_init(ft_strdup(entry->d_name)));
+        }
       }
       entry = readdir(root);
     }
+
+    lst = ft_mergeSort(lst);
+    temp_lst = ft_mergeSort(temp_lst);
+
+    ft_lst_print(temp_lst);
+
     printf("\n");
     closedir(root);
     while (lst != NULL && flaggy && flaggy->R_flag == 1) {
@@ -45,7 +59,7 @@ void print_current_directory(char *rooted, t_flag *flaggy) {
       print_current_directory(lst->content, flaggy);
       lst = lst->next;
     }
-    if (lst != NULL &&  flaggy && flaggy->R_flag == 1 ) {
+    if (lst != NULL && flaggy && flaggy->R_flag == 1) {
       ft_cleart_dlist(&lst, free);
     }
   }
