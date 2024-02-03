@@ -1,4 +1,4 @@
-NAME = cub3d
+NAME = main
 
 NAME_B = cub3d_bonus
 
@@ -31,11 +31,11 @@ ${NAME}:${OBJS}
 		@$(MAKE) -C ./utils/libft
 
 ifeq ($(OS),Darwin)
-		@${CC} ${FLAGS} ${OBJS} ${LIBS} ${FRAMEWORK} -o ${NAME}
+		@${CC} ${FLAGS} ${OBJS} ${LIBS} ${FRAMEWORK} -o  ${NAME}
 endif
 
 ifeq ($(OS),Linux)
-		@${CC} ${FLAGS} ${OBJS}  ./utils/libft/libft.a  -o ${NAME}
+		@${CC} ${FLAGS} ${OBJS}  ./utils/libft/libft.a  -o 	./tmp/${NAME}
 endif
 
 clean:
@@ -54,7 +54,11 @@ val:
 	valgrind --track-origins=yes --leak-check=full ./$(NAME) ./map/valid_map1.cub
 
 run: all
-	./${NAME}  -R
+	./${NAME} -----------------wwwwwwwwwwwwwww 
+
+
+
+
 
 norm:
 	norminette ${SRCS}

@@ -25,6 +25,7 @@ static char	*findme(char *str, char *location)
 	inc = 0;
 	cin = 0;
 	if (!str)
+    printf("str is null");
 		return (NULL);
 	while (str[inc] != *location)
 		inc++;

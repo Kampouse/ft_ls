@@ -11,30 +11,94 @@
 /* ************************************************************************** */
 
 #include "../Include/cube.h"
+#include <stdlib.h>
+
+int ft_isspace(char c) {
+  if (c == ' ' || c == '\t' || c == '\n' || c == '\v' || c == '\f' || c == '\r')
+    return (1);
+  return (0);
+}
+
+// check if the string startt with a - and that there is a char after  the -
+int is_flag(char *str) {
+  // check the len  of the string
+  if (ft_strlen(str) == 1)
+    return (0);
+  if (str[0] == '-' && str[1] != '\0')
+    return (1);
+  return (0);
+}
+
+// get me the number of fags so i can  take the correct agrs for th dir
+int get_flag_counter(char **str, int argc) {
+
+  // check ift there no flag
+  if (argc == 1) {
+    return 1;
+  }
+
+  int count = 0;
+  int i = 1;
+  while (count < argc) {
+    if (is_flag(str[i]) == 1) {
+      count++;
+    } else {
+      return count;
+    }
+  }
+
+  return count;
+}
+
+// take all the argument and join    the flags into one string and return it the
+// flag is not valid return the current string
+char *get_current_flag_string(int argc, char *argv[]) {
+
+  int i = 1;
+  char *flag = ft_strdup("");
+  char *temp;
+  if (argc == 1) {
+
+    free(flag);
+
+    return NULL;
+  }
+
+  while (i < argc) {
+    if (is_flag(argv[i]) == 1) {
+      temp = ft_strjoin(flag, argv[i]);
+      free(flag);
+      flag = temp;
+    } else {
+      return (flag);
+    }
+    i++;
+  }
+  return (flag);
+}
 
 t_flag *get_flaggy(char *str) {
-  int i = 0;
+  int i;
+   i = 0;
   t_flag *flag = malloc(sizeof(t_flag));
-
   flag->l_flag = 0;
   flag->R_flag = 0;
   flag->a_flag = 0;
   flag->r_flag = 0;
   flag->t_flag = 0;
-
+  flag->invalid_flag= 0;
   if (!str) {
     return (flag);
   }
-
   if (ft_strlen(str) == 1 && str[0] == '-') {
     return (flag);
   }
   while (str[i] != '\0') {
-    if (str[i] == '-' && i == 0) {
+    printf("str[i]:(%c)\n", str[i]);
+    if (ft_isspace(str[i]) == 0 || (str[i] == '-' && i == 0)) {
       i++;
-      continue;
-    } else if (str[i] == '-' && i != 1) {
-      printf(" hello %s\n", str);
+    }
+    if (str[i] == '-' && i != 1) {
       return (NULL);
     } else if (str[i] == 'l') {
       flag->l_flag = 1;
@@ -43,9 +107,7 @@ t_flag *get_flaggy(char *str) {
       flag->R_flag = 1;
       printf("flag R\n");
     } else if (str[i] == 'a') {
-
       flag->a_flag = 1;
-      printf("flag a\n");
     } else if (str[i] == 'r') {
 
       flag->r_flag = 1;
@@ -54,12 +116,9 @@ t_flag *get_flaggy(char *str) {
       flag->t_flag = 1;
       printf("flag t\n");
     } else {
-      printf("str[i] : %c\n", str[i]);
-      printf("flag error\n");
-      free(flag);
-      return (NULL);
+      flag->invalid_flag = 1;
+      return (flag);
     }
-
     i++;
   }
   return (flag);

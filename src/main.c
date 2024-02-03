@@ -65,13 +65,45 @@ void print_current_directory(char *rooted, t_flag *flaggy) {
   }
 }
 
+// check if the  the thing  look like a flag
+
+int display_flaggy(t_flag *flaggy) {
+
+  if (flaggy == NULL) {
+    printf("flaggy is null\n");
+    return (0);
+  }
+  printf("heele");
+  printf("flaggy->a_flag:%d\n", flaggy->a_flag);
+  printf("flaggy->R_flag:%d\n", flaggy->R_flag);
+  printf("flaggy->r_flag:%d\n", flaggy->r_flag);
+  printf("flaggy->t_flag:%d\n", flaggy->t_flag);
+  printf("flaggy->l_flag:%d\n", flaggy->l_flag);
+
+  return (0);
+}
+
 int main(int argc, char *argv[]) {
   (void)argc;
   (void)argv;
 
   t_flag *flaggy = NULL;
 
-  flaggy = get_flaggy(argv[1]);
+  char *temp = NULL;
+
+  temp = get_current_flag_string(argc, argv);
+  int len = get_flag_counter(argv, argc);
+  printf("temp:%s\n", temp);
+  printf("len:%d %d\n", len, argc);
+  flaggy = get_flaggy(temp);
+  free(temp);
+  if (flaggy->invalid_flag == 1) {
+    printf("invalid flag\n");
+    free(flaggy);
+    return (0);
+  }
+
+  display_flaggy(flaggy);
   if (argc == 1) {
     print_current_directory(".", flaggy);
   } else if (argc == 2) {
@@ -81,31 +113,8 @@ int main(int argc, char *argv[]) {
       return (0);
     }
     print_current_directory(".", flaggy);
-  } else {
-    printf("error\n");
   }
+
+  print_current_directory(".", flaggy);
   free(flaggy);
-
-  // make a linked list of  all the directories and files in the current
-  // directory if the  flag  is  -a  then  print  all  the  files  and
-  // directories  in  the  current  directory if the  flag  is  -l  then print
-  // all  the  files  and  directories  in  the  current  directory  in  a
-  // list format if the  flag  is  -R  then  print  all  the  files  and
-  // directories in  the  current  directory  in  a  list  format  and
-  // recursively  print all  the  files  and  directories  in  the
-  // subdirectories  of  the current directory if the  flag  is  -r  then
-  // print  all  the  files  and directories  in  the  current  directory  in
-  // a  list  format  in  reverse order if the  flag  is  -t  then  print  all
-  // the  files  and  directories in  the  current  directory  in  a  list
-  // format  sorted  by  time modified (newest  first) if the  flag  is  -a -l
-  // then  print  all  the  files  and directories  in  the  current directory
-  // in  a  list  format  including the  hidden  files  and  directories if
-  // the  flag  is  -a  -R  then  print all  the  files  and  directories  in
-  // the  current  directory  in  a  list format  including  the  hidden files
-  // and  directories  and  recursively print  all  the  files  and
-  // directories  in  the  subdirectories  of  the current  directory
-
-  // flag -l -R -a -r -t
-  // check the  flags  and  print  the  files  and  directories  in  the
-  // current directory i want to print_current_directory(".");
 }
