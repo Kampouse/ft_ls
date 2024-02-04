@@ -38,7 +38,7 @@ int get_flag_counter(char **str, int argc) {
   }
 
   int count = 0;
-  int i = 1;
+  int i = 0;
   while (count < argc) {
     if (is_flag(str[i]) == 1) {
       count++;
@@ -79,14 +79,14 @@ char *get_current_flag_string(int argc, char *argv[]) {
 
 t_flag *get_flaggy(char *str) {
   int i;
-   i = 0;
+  i = 0;
   t_flag *flag = malloc(sizeof(t_flag));
   flag->l_flag = 0;
   flag->R_flag = 0;
   flag->a_flag = 0;
   flag->r_flag = 0;
   flag->t_flag = 0;
-  flag->invalid_flag= 0;
+  flag->invalid_flag = 0;
   if (!str) {
     return (flag);
   }

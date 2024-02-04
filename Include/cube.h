@@ -41,6 +41,8 @@ typedef struct s_flag {
   int invalid_flag;
 } t_flag;
 
+
+int is_flag(char *str);
 int get_flag_counter(char **str, int argc);
 t_flag *get_flaggy(char *str);
 char *get_current_flag_string(int argc, char *argv[]);

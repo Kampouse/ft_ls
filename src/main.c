@@ -32,7 +32,10 @@ void print_current_directory(char *rooted, t_flag *flaggy) {
           free(temp);
           ft_lst_add_backd(&temp_lst, node_init(ft_strdup(entry->d_name)));
           ft_lst_add_backd(&lst, node_init(path));
-          // print_current_directory(path, flaggy);
+          if (flaggy->R_flag == 1) {
+            printf("path:%s\n", path);
+            print_current_directory(path, flaggy);
+          }
         }
       } else {
 
@@ -54,10 +57,16 @@ void print_current_directory(char *rooted, t_flag *flaggy) {
 
     printf("\n");
     closedir(root);
-    while (lst != NULL && flaggy && flaggy->R_flag == 1) {
-      printf("%s->:\n", (char *)lst->content);
-      print_current_directory(lst->content, flaggy);
+    while (lst != NULL && flaggy) {
+      //     printf("%s->:\n", (char *)lst->content);
+      temp_lst = lst;
+      if (flaggy->R_flag == 1) {
+        print_current_directory(lst->content, flaggy);
+      }
+
+      free(lst->content);
       lst = lst->next;
+      free(temp_lst);
     }
     if (lst != NULL && flaggy && flaggy->R_flag == 1) {
       ft_cleart_dlist(&lst, free);
@@ -102,18 +111,7 @@ int main(int argc, char *argv[]) {
     free(flaggy);
     return (0);
   }
-
   display_flaggy(flaggy);
-  if (argc == 1) {
-    print_current_directory(".", flaggy);
-  } else if (argc == 2) {
-
-    if (flaggy == NULL) {
-      printf("flaggy is null\n");
-      return (0);
-    }
-    print_current_directory(".", flaggy);
-  }
 
   print_current_directory(".", flaggy);
   free(flaggy);
