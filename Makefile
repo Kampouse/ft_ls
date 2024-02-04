@@ -54,7 +54,7 @@ val:
 	valgrind --track-origins=yes --leak-check=full ./$(NAME) ./map/valid_map1.cub
 
 run: all
-	./${NAME} -----------------wwwwwwwwwwwwwww 
+	./${NAME} -a   
 
 
 

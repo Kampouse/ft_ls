@@ -125,7 +125,7 @@ t_dlist *ft_mergeSort(t_dlist *head) {
 void ft_lst_print(t_dlist *currlist) {
   t_dlist *temp;
   while (currlist) {
-    printf("%s  ", (char *)currlist->content);
+    printf("%s\n", (char *)currlist->content);
     free(currlist->content);
     currlist->content = NULL;
     temp = currlist;

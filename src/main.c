@@ -33,7 +33,7 @@ void print_current_directory(char *rooted, t_flag *flaggy) {
           ft_lst_add_backd(&temp_lst, node_init(ft_strdup(entry->d_name)));
           ft_lst_add_backd(&lst, node_init(path));
           if (flaggy->R_flag == 1) {
-            printf("path:%s\n", path);
+            printf("%s\n", path);
             print_current_directory(path, flaggy);
           }
         }
@@ -102,8 +102,8 @@ int main(int argc, char *argv[]) {
 
   temp = get_current_flag_string(argc, argv);
   int len = get_flag_counter(argv, argc);
-  printf("temp:%s\n", temp);
-  printf("len:%d %d\n", len, argc);
+  // printf("temp:%s\n", temp);
+  (void)len;
   flaggy = get_flaggy(temp);
   free(temp);
   if (flaggy->invalid_flag == 1) {
@@ -111,7 +111,7 @@ int main(int argc, char *argv[]) {
     free(flaggy);
     return (0);
   }
-  display_flaggy(flaggy);
+  // display_flaggy(flaggy);
 
   print_current_directory(".", flaggy);
   free(flaggy);

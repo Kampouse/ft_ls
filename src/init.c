@@ -94,7 +94,6 @@ t_flag *get_flaggy(char *str) {
     return (flag);
   }
   while (str[i] != '\0') {
-    printf("str[i]:(%c)\n", str[i]);
     if (ft_isspace(str[i]) == 0 || (str[i] == '-' && i == 0)) {
       i++;
     }
@@ -105,7 +104,7 @@ t_flag *get_flaggy(char *str) {
       printf("flag l\n");
     } else if (str[i] == 'R') {
       flag->R_flag = 1;
-      printf("flag R\n");
+      // printf("flag R\n");
     } else if (str[i] == 'a') {
       flag->a_flag = 1;
     } else if (str[i] == 'r') {
