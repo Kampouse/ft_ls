@@ -27,6 +27,7 @@
 
 typedef struct t_dlist {
   void *content;
+  time_t creation_date;
   struct t_dlist *next;
   struct t_dlist *prev;
 } t_dlist;
@@ -41,12 +42,15 @@ typedef struct s_flag {
   int invalid_flag;
 } t_flag;
 
-
 int is_flag(char *str);
 int get_flag_counter(char **str, int argc);
+
+void apply_stat(t_dlist *head,char *root);
 t_flag *get_flaggy(char *str);
 char *get_current_flag_string(int argc, char *argv[]);
 void ft_lst_print(t_dlist *currlist);
+
+int ft_lst_lenght(t_dlist *currlist);
 t_dlist *ft_mergeSort(t_dlist *head);
 t_dlist *ft_lst_lastnode(t_dlist *currlist);
 t_dlist *ft_lst_firstnode(t_dlist *currlist);

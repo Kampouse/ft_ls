@@ -50,6 +50,38 @@ int get_flag_counter(char **str, int argc) {
   return count;
 }
 
+void apply_stat(t_dlist *head, char *root) {
+  struct stat fileInfo;
+  t_dlist *temp;
+  char *rooted;
+  temp = head;
+
+  while (temp) {
+
+    printf("fat \n");
+    if (temp && temp->content) {
+
+      rooted = ft_strjoin(root, temp->content);
+
+      if (stat(rooted, &fileInfo) == 0) {
+#ifdef __APPLE__
+        // macOS supports st_birthtime for creation time
+        temp->creation_date = fileInfo.st_birthtime;
+        printf(" what -> %ld %s\n", temp->creation_date, rooted);
+        free(rooted);
+#else
+        //  might be buggy
+        temp->creation_date = fileInfo.st_mtime;
+        free(rooted);
+#endif
+      }
+    } else {
+      perror("stat");
+    }
+    temp = temp->next;
+  }
+}
+
 // take all the argument and join    the flags into one string and return it the
 // flag is not valid return the current string
 char *get_current_flag_string(int argc, char *argv[]) {
