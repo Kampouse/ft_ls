@@ -11,6 +11,7 @@ void print_current_directory(char *rooted, t_flag *flaggy) {
   (void)flaggy;
   t_dlist *lst = NULL;
   t_dlist *temp_lst = NULL;
+  t_dlist *temp_content;
   if (root) {
     struct dirent *entry = readdir(root);
     if (entry == NULL) {
@@ -30,8 +31,14 @@ void print_current_directory(char *rooted, t_flag *flaggy) {
 
           temp = ft_strjoin(rooted, "/");
           path = ft_strjoin(temp, entry->d_name);
-
-          ft_lst_add_backd(&temp_lst, node_init(ft_strdup(entry->d_name)));
+          temp_content = node_init(ft_strdup(entry->d_name));
+          ft_lst_add_backd(&temp_lst, temp_content);
+          struct stat fileInfo;
+          if (stat(temp_content->content, &fileInfo) == 0) {
+            printf("fileInfo.st_size %lld %s\n", fileInfo.st_size,
+                   entry->d_name);
+            temp_content->creation_date = fileInfo.st_birthtime;
+          }
           ft_lst_add_backd(&lst, node_init(path));
           if (flaggy->R_flag == 1) {
             printf("%s\n", path);
@@ -43,17 +50,23 @@ void print_current_directory(char *rooted, t_flag *flaggy) {
         if (entry->d_name[0] == '.' && flaggy->a_flag == 1) {
 
           struct stat fileInfo;
-          t_dlist *temp = node_init(ft_strdup(entry->d_name));
+          temp_content = node_init(ft_strdup(entry->d_name));
           // do  a stat on the file and add it to the list
-          if (stat(temp->content, &fileInfo) == 0) {
+          if (stat(temp_content->content, &fileInfo) == 0) {
             printf("fileInfo.st_size %lld %s\n", fileInfo.st_size,
                    entry->d_name);
-            temp->creation_date = fileInfo.st_birthtime;
-            ft_lst_add_backd(&temp_lst, temp);
+            temp_content->creation_date = fileInfo.st_birthtime;
+            ft_lst_add_backd(&temp_lst, temp_content);
           }
         } else if (entry->d_name[0] != '.') {
-
-          ft_lst_add_backd(&temp_lst, node_init(ft_strdup(entry->d_name)));
+          struct stat fileInfo;
+          temp_content = node_init(ft_strdup(entry->d_name));
+          if (stat(temp_content->content, &fileInfo) == 0) {
+            printf("fileInfo.st_size %lld %s\n", fileInfo.st_size,
+                   entry->d_name);
+            temp_content->creation_date = fileInfo.st_birthtime;
+          }
+          ft_lst_add_backd(&temp_lst, temp_content);
         }
       }
       entry = readdir(root);
