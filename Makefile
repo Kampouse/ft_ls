@@ -2,7 +2,7 @@ NAME = main
 
 NAME_B = cub3d_bonus
 
-FLAGS = -Wall -Werror -Wextra -O3 -fsanitize=address -fsanitize=undefined  
+FLAGS = -Wall -Werror -Wextra -g 
 
 SRCS = 	src/main.c src/init.c utils/dblink/dblink.c  utils/dblink/dblink_utils.c  \
 
@@ -35,7 +35,7 @@ ifeq ($(OS),Darwin)
 endif
 
 ifeq ($(OS),Linux)
-		@${CC} ${FLAGS} ${OBJS}  ./utils/libft/libft.a  -o 	./tmp/${NAME}
+		@${CC} ${FLAGS} ${OBJS}  ./utils/libft/libft.a  -o 	${NAME}
 endif
 
 clean:
@@ -51,7 +51,7 @@ git:
 	@git add ${SRCS} ${HEADER} Makefile
 
 val:
-	valgrind --track-origins=yes --leak-check=full ./$(NAME) ./map/valid_map1.cub
+	valgrind --track-origins=yes --leak-check=full ./$(NAME) -R
 
 run: all
 	./${NAME} -a   
