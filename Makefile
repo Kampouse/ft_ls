@@ -2,7 +2,7 @@ NAME = main
 
 NAME_B = cub3d_bonus
 
-FLAGS = -Wall -Werror -Wextra -g 
+FLAGS = -Wall -Werror -Wextra -g -fsanitize=address -fsanitize=undefined  
 
 SRCS = 	src/main.c src/init.c utils/dblink/dblink.c  utils/dblink/dblink_utils.c  \
 
