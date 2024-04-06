@@ -30,12 +30,14 @@ void print_current_directory(char *rooted, t_flag *flaggy) {
 
           temp = ft_strjoin(rooted, "/");
           path = ft_strjoin(temp, entry->d_name);
+          printf("%s \n -> ", path);
 
-          ft_lst_add_backd(&temp_lst, node_init(ft_strdup(entry->d_name)));
+          // printf("%s->", path);
           ft_lst_add_backd(&lst, node_init(path));
+
+          //ft_lst_add_backd(&temp_lst, node_init(ft_strdup(entry->d_name)));
           if (flaggy->R_flag == 1) {
-            printf("%s\n", path);
-            print_current_directory(path, flaggy);
+            // print_current_directory(path, flaggy);
           }
         }
       } else {
@@ -58,11 +60,11 @@ void print_current_directory(char *rooted, t_flag *flaggy) {
       }
       entry = readdir(root);
     }
-    lst = ft_mergeSort(lst);
     temp_lst = ft_mergeSort(temp_lst);
-    //    apply_stat(temp_lst, temp);
+    lst = ft_mergeSort(lst);
+    // apply_stat(temp_lst, temp);
     ft_lst_print(temp_lst);
-    printf("\n");
+    // printf("\n");
     closedir(root);
     while (lst != NULL && flaggy) {
       //     printf("%s->:\n", (char *)lst->content);
@@ -71,14 +73,14 @@ void print_current_directory(char *rooted, t_flag *flaggy) {
         print_current_directory(lst->content, flaggy);
       }
 
-      free(lst->content);
+      // free(lst->content);
       lst = lst->next;
-      free(temp_lst);
+      // free(temp_lst);
     }
     if (lst != NULL && flaggy && flaggy->R_flag == 1) {
       ft_cleart_dlist(&lst, free);
     }
-    free(temp);
+    // free(temp);
   }
 }
 
